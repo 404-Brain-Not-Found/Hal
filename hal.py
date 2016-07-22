@@ -339,10 +339,10 @@ class _UserInterface_(object):
     def _mod_help_(self):
         self.page = self.ui.new_ui_page(title='Adding Module Help', prev_text='Back', onprevclick=self._help_)
         self.title = self.page.add_textbox("First: Enter the name that you want the module to be called.")
-        self.title = self.page.add_textbox("Second: Enter the House that you wat the module to be in.")
+        self.title = self.page.add_textbox("Second: Enter the House that you want the module to be in.")
         self.title = self.page.add_textbox("Third: Enter the name of the arduino you want to control the module.")
         self.title = self.page.add_textbox("Fourth: Enter 'yes' if you want the "
-                                           "module to be controlled by a thermometer")
+                                           "module to be controlled by a thermometer.")
         self.title = self.page.add_textbox("Fifth: Hit the 'Add Module' button.")
         self.title = self.page.add_textbox("Sixth: Set the number on the module to the number the Pi display.")
 
@@ -365,6 +365,7 @@ class _UserInterface_(object):
         self.list.add_item("Check Houses", chevron=True, onclick=self._houses_)
         self.list.add_item("Add Module", chevron=True, onclick=self._add_module_)
         self.list.add_item("Add Arduino", chevron=True, onclick=self._add_arduino_)
+        self.list.add_item("Help", chevron=True, onclick=self._help_)
         self.ui.done()
 
     def _main_(self):
