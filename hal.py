@@ -318,19 +318,21 @@ class _UserInterface_(object):
     def _new_arduino_(self):
         arduinos[len(arduinos)] = {'name': self.arduinoTxt.get_text()}
         self.page = self.ui.new_ui_page(title="Successfully added an arduino")
-        button = self.page.add_button('Return to Main page', self._main_menu_())
+        button = self.page.add_button('Return to Main page', self._main_menu_)
 
-    def _add_arduino(self):
-        self.page = self.ui.new_ui_page(title="Add Arduino", prev_text="Back", onprevclick=self._main_menu_())
+    def _add_arduino_(self):
+        self.page = self.ui.new_ui_page(title="Add Arduino", prev_text="Back", onprevclick=self._main_menu_)
         self.title = self.page.add_textbox("Enter name")
-        self.arduinoTxt = self.page.add_input("Name", "h1")
+        self.arduinoTxt = self.page.add_input("text", "Name")
         button = self.page.add_button("Add Arduino", self._new_arduino_)
+        self.ui.done()
 
     def _main_menu_(self):
         self.page = self.ui.new_ui_page(title="Welcome to the HAL interface.")
         self.list = self.page.add_list()
         self.list.add_item("Check Houses", chevron=True, onclick=self._houses_)
         self.list.add_item("Add Module", chevron=True, onclick=self._add_module_)
+        self.list.add_item("Add Arduino", chevron=True, onclick=self._add_arduino_)
         self.ui.done()
 
     def _main_(self):
