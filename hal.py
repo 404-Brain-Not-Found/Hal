@@ -247,6 +247,7 @@ class _UserInterface_(object):
         self.ui = PiUi(img_dir=os.path.join(current_dir, 'imgs'))
         self.src = "sunset.png"
 
+<<<<<<< HEAD
     def _swicth_state_(self, mod, value):
         modules[mod]['state'] = not modules[mod]['state']
         
@@ -257,6 +258,20 @@ class _UserInterface_(object):
             if modules[i]["house"] == HOUSE_LIST[house]:
                 self.list.add_item(modules[i]['name'], chevron= False, toggle = modules[i]["house"], ontoggle=functools.partial(self._swicth_state_, i))
                 
+=======
+    def _swicth_state_(self, mod):
+        modules[mod]['state'] = not modules[mod]['state']
+        
+    def _house_(self, house):
+        self.page = self.ui.new_ui_page(title="House " + house, prev_text="Back", onprevclick=self._houses_)
+        self.list = self.page.add_list()
+        for i in modules:
+            if modules[i]['house'] == HOUSE_LIST[house]:
+                if modules[i]['state']:
+                    self.list.add_item(modules[i]['name'] + " is on", onclick=functools.partial(self._swicth_state_, i))
+                else:
+                    self.list.add_item(modules[i]['name'] + " is on", onclick=functools.partial(self._swicth_state_, i))
+>>>>>>> 9dc210cd8bb886c6be59e4b8dafd99584bd6edc8
             
     def _houses_(self):
         self.page = self.ui.new_ui_page(title="Pick house", prev_text="Back", onprevclick=self._main_menu_)
@@ -288,10 +303,16 @@ class _UserInterface_(object):
         if self.tempTxt.get_text().lower() == 'yes':
             temp_con = True
         if current_number_in_house <= 16:
+<<<<<<< HEAD
             modules[len(modules)] = ({'name': self.nameTxt.get_text(), 'arduino': self.arduinoTxt,
                                      'house': HOUSE_LIST[self.houseTxt.get_text().upper()],
                                      'unit': UNIT_LIST[str(current_number_in_house)], 'temp': temp_con,
                                      'state': False})
+=======
+            modules.append({'name': self.nameTxt.get_text(), 'arduino': self.arduinoTxt,
+                            'house': HOUSE_LIST[self.houseTxt.get_text().upper()],
+                            'number':UNIT_LIST[str(current_number_in_house)], 'temp': temp_con, 'state': False})
+>>>>>>> 9dc210cd8bb886c6be59e4b8dafd99584bd6edc8
             self.page = self.ui.new_ui_page(title="You successfuly add a new Module")
             self.title = self.page.add_textbox("Set the X10 module to unit number:", "h1")
             self.title = self.page.add_textbox(str(current_number_in_house), "h1")
@@ -308,8 +329,13 @@ class _UserInterface_(object):
         self.nameTxt = self.page.add_input('text', 'name')
         self.title = self.page.add_textbox('House name', 'h1')
         self.houseTxt = self.page.add_input('text', 'House Letter')
+<<<<<<< HEAD
         self.title = self.page.add_textbox("Arduino", "h1")
         self.arduinoTxt = self.page.add_input('text', 'Arduino name')
+=======
+        self.title = self.page.add_textbox('Name of arduino', 'h1')
+        self.arduinoTxt = self.page.add_input('text', 'name')
+>>>>>>> 9dc210cd8bb886c6be59e4b8dafd99584bd6edc8
         self.title = self.page.add_textbox('Tempture controled', 'h1')
         self.tempTxt = self.page.add_input('text', 'Control by Temp')
         button = self.page.add_button('Add Module', self._add_mod_)
