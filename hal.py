@@ -255,29 +255,29 @@ class _UserInterface_(object):
         for i in modules:
             if modules[i][1] == HOUSE_LIST[house]:
                 if modules[i][5]:
-                    self.list.add_item(module[i][0] + " is on", onclick=functools.partial(self.swicthState, i))
+                    self.list.add_item(module[i][0] + " is on", onclick=functools.partial(self._swicth_state_, i))
                 else:
-                    self.list.add_item(module[i][0] + " is on", onclick=functools.partial(self.swicthState, i))
+                    self.list.add_item(module[i][0] + " is on", onclick=functools.partial(self._swicth_state_, i))
             
     def _houses_(self):
-        self.page = self.ui.new_ui_page(title="Pick house", prev_text="Back", onprevclick=self.main_menu)
+        self.page = self.ui.new_ui_page(title="Pick house", prev_text="Back", onprevclick=self._main_menu_)
         self.list = self.page.add_list()
-        self.list.add_item("House A", chevron=True, onclick=functools.partial(self.House, 'A'))
-        self.list.add_item("House B", chevron=True, onclick=functools.partial(self.House, 'B'))
-        self.list.add_item("House C", chevron=True, onclick=functools.partial(self.House, 'C'))
-        self.list.add_item("House D", chevron=True, onclick=functools.partial(self.House, 'D'))
-        self.list.add_item("House E", chevron=True, onclick=functools.partial(self.House, 'E'))
-        self.list.add_item("House F", chevron=True, onclick=functools.partial(self.House, 'F'))
-        self.list.add_item("House G", chevron=True, onclick=functools.partial(self.House, 'G'))
-        self.list.add_item("House H", chevron=True, onclick=functools.partial(self.House, 'H'))
-        self.list.add_item("House I", chevron=True, onclick=functools.partial(self.House, 'I'))
-        self.list.add_item("House J", chevron=True, onclick=functools.partial(self.House, 'J'))
-        self.list.add_item("House K", chevron=True, onclick=functools.partial(self.House, 'K'))
-        self.list.add_item("House L", chevron=True, onclick=functools.partial(self.House, 'L'))
-        self.list.add_item("House M", chevron=True, onclick=functools.partial(self.House, 'M'))
-        self.list.add_item("House N", chevron=True, onclick=functools.partial(self.House, 'N'))
-        self.list.add_item("House O", chevron=True, onclick=functools.partial(self.House, 'O'))
-        self.list.add_item("House P", chevron=True, onclick=functools.partial(self.House, 'P'))
+        self.list.add_item("House A", chevron=True, onclick=functools.partial(self._house_, 'A'))
+        self.list.add_item("House B", chevron=True, onclick=functools.partial(self._house_, 'B'))
+        self.list.add_item("House C", chevron=True, onclick=functools.partial(self._house_, 'C'))
+        self.list.add_item("House D", chevron=True, onclick=functools.partial(self._house_, 'D'))
+        self.list.add_item("House E", chevron=True, onclick=functools.partial(self._house_, 'E'))
+        self.list.add_item("House F", chevron=True, onclick=functools.partial(self._house_, 'F'))
+        self.list.add_item("House G", chevron=True, onclick=functools.partial(self._house_, 'G'))
+        self.list.add_item("House H", chevron=True, onclick=functools.partial(self._house_, 'H'))
+        self.list.add_item("House I", chevron=True, onclick=functools.partial(self._house_, 'I'))
+        self.list.add_item("House J", chevron=True, onclick=functools.partial(self._house_, 'J'))
+        self.list.add_item("House K", chevron=True, onclick=functools.partial(self._house_, 'K'))
+        self.list.add_item("House L", chevron=True, onclick=functools.partial(self._house_, 'L'))
+        self.list.add_item("House M", chevron=True, onclick=functools.partial(self._house_, 'M'))
+        self.list.add_item("House N", chevron=True, onclick=functools.partial(self._house_, 'N'))
+        self.list.add_item("House O", chevron=True, onclick=functools.partial(self._house_, 'O'))
+        self.list.add_item("House P", chevron=True, onclick=functools.partial(self._house_, 'P'))
         self.ui.done()
 
     def _add_mod_(self):
@@ -288,36 +288,35 @@ class _UserInterface_(object):
                 current_number_in_house = + 1
         if self.tempTxt.get_text().lower() == 'yes':
             temp_con = True
-        if currentNumberInHouse <= 16:
+        if current_number_in_house <= 16:
             modules.append([self.nameTxt.get_text(), HOUSE_LIST[self.houseTxt.get_text().upper()],
                             UNIT_LIST[str(current_number_in_house)], tempCon, False])
-            self.page = self.ui.new_ui_page(title="You successfuly add a new Module", prev_text="Back to Main menu",
-                                            onprevclick=self.main_menu)
+            self.page = self.ui.new_ui_page(title="You successfuly add a new Module")
             self.title = self.page.add_textbox("Set the X10 module to unit number:", "h1")
-            self.title = self.page.add_textbox(str(currentNumberInHouse), "h1")
-            button = self.page.add_button('Return to home page', self.main_menu)
+            self.title = self.page.add_textbox(str(current_number_in_house), "h1")
+            button = self.page.add_button('Return to home page', self._main_menu_)
             self.ui.done()
         else:
             self.page = self.ui.new_ui_page(title="Failed to add the new module.")
             self.title = self.page.add_textbox("There too many modules for the choosen house. Pick another house.", 'h1')
-            button = self.page.add_button("return to page to add module", self.addModule)
+            button = self.page.add_button("return to page to add module", self._add_module_)
 
     def _add_module_(self):
-        self.page = self.ui.new_ui_page(title="Add Module" , prev_text="Back", onprevclick=self.main_menu)
+        self.page = self.ui.new_ui_page(title="Add Module" , prev_text="Back", onprevclick=self._main_menu_)
         self.title = self.page.add_textbox("Name of Module", 'h1')
         self.nameTxt = self.page.add_input('text', 'name')
         self.title = self.page.add_textbox('House name', 'h1')
         self.houseTxt = self.page.add_input('text', 'House Letter')
         self.title = self.page.add_textbox('Tempture controled', 'h1')
         self.tempTxt = self.page.add_input('text', 'Control by Temp')
-        button = self.page.add_button('Add Module', self.addMod)
+        button = self.page.add_button('Add Module', self._add_mod_)
         self.ui.done()
 
     def _main_menu_(self):
         self.page = self.ui.new_ui_page(title="Welcome to the HAL interface.")
         self.list = self.page.add_list()
-        self.list.add_item("Check Houses", chevron=True, onclick=self.Houses)
-        self.list.add_item("Add Module", chevron=True, onclick=self.addModule)
+        self.list.add_item("Check Houses", chevron=True, onclick=self._houses_)
+        self.list.add_item("Add Module", chevron=True, onclick=self._add_module_)
         self.ui.done()
 
     def _main_(self):
@@ -326,8 +325,8 @@ class _UserInterface_(object):
 
 
 def _main_():
-    piui = userInterface()
-    piui.main()
+    piui = _UserInterface_()
+    piui._main_()
 
 if __name__ == "__main__":
-    main()
+    _main_()
