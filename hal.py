@@ -327,6 +327,38 @@ class _UserInterface_(object):
         button = self.page.add_button("Add Arduino", self._new_arduino_)
         self.ui.done()
 
+    def _check_help_(self):
+        self.page = self.ui.new_ui_page(title='Checking Module Help', prev_text='Back', onprevclick=self._help_)
+        self.title = self.page.add_textbox("Point:", 'h1')
+        self.title = self.page.add_textbox("    On or off module manualy")
+        self.title = self.page.add_textbox("How to use", 'h1')
+        self.title = self.page.add_textbox("    Click on the House the module is in.")
+        self.title = self.page.add_textbox("    The toggle button is used to turn on and off the module")
+        self.ui.done()
+
+    def _mod_help_(self):
+        self.page = self.ui.new_ui_page(title='Adding Module Help', prev_text='Back', onprevclick=self._help_)
+        self.title = self.page.add_textbox("First: Enter the name that you want the module to be called.")
+        self.title = self.page.add_textbox("Second: Enter the House that you wat the module to be in.")
+        self.title = self.page.add_textbox("Third: Enter the name of the arduino you want to control the module.")
+        self.title = self.page.add_textbox("Fourth: Enter 'yes' if you want the "
+                                           "module to be controlled by a thermometer")
+        self.title = self.page.add_textbox("Fifth: Hit the 'Add Module' button.")
+        self.title = self.page.add_textbox("Sixth: Set the number on the module to the number the Pi display.")
+
+    def _arduino_help_(self):
+        self.page = self.ui.new_ui_page(title="Adding Arduino Help", prev_text='Back', onprevclick=self._help_)
+        self.title = self.page.add_textbox("Just enter the name of the arduino that you want.")
+        self.ui.done()
+
+    def _help_(self):
+        self.page = self.ui.new_ui_page(title="Help", prev_text="Back", onprevclick=self._main_menu_)
+        self.list = self.page.add_list()
+        self.list.add_item("Check House", chevron=True, onclick=self._check_help_)
+        self.list.add_item("Add Module", chevron=True, onclick=self._mod_help_)
+        self.list.add_item("add Arduino", chevron=True, onclick=self._arduino_help_)
+        self.ui.done()
+
     def _main_menu_(self):
         self.page = self.ui.new_ui_page(title="Welcome to the HAL interface.")
         self.list = self.page.add_list()
