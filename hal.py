@@ -7,6 +7,7 @@ import os
 import random
 from piui import PiUi
 current_dir = os.path.dirname(os.path.abspath(__file__))
+port = 1
 modRecords = {}
 modules = {}
 arduinos = {}
@@ -32,7 +33,7 @@ def _send_data_to_arduino_(code):
         break
     
 
-def _data_from_arduino():
+def _data_from_arduino_():
     data = range(6)
     for i in range(4, 10):
         IO.setup(i, IO.IN)
@@ -250,6 +251,8 @@ class _UserInterface_(object):
 
     def _swicth_state_(self, mod, value):
         modules[mod]['state'] = not modules[mod]['state']
+        modules[mod]['user'] = True
+        modules[mod]['start'] = time.time()
         
     def _house_(self, house):
         self.page = self.ui.new_ui_page(title= house, prev_text="Back", onprevclick=self._houses_)
@@ -316,7 +319,7 @@ class _UserInterface_(object):
         self.ui.done()
 
     def _new_arduino_(self):
-        arduinos[len(arduinos)] = {'name': self.arduinoTxt.get_text()}
+        arduinos[len(arduinos)] = {'name': self.arduinoTxt.get_text(), 'temp': CMD_OFF, 'pir': CMD_OFF}
         self.page = self.ui.new_ui_page(title="Successfully added an arduino")
         button = self.page.add_button('Return to Main page', self._main_menu_)
 
@@ -376,6 +379,48 @@ class _UserInterface_(object):
 def _main_():
     piui = _UserInterface_()
     piui._main_()
+
+
+def _read_arduinos_():
+    for i in arduinos:
+        _send_data_to_arduino_(1)
+        _send_data_to_arduino_(i)
+        if _data_from_arduino_() == 1:
+            arduinos[i]['temp'] = CMD_ON
+        else:
+            arduinos[i]['temp'] = CMD_OFF
+        if _data_from_arduino_() == 1:
+            arduinos[i]['pir'] == CMD_ON
+        else:
+            arduinos[i]['pir'] == CMD_OFF
+
+
+def _set_modules_():
+    for i in modules:
+        for x in arduinos:
+            if modules[i]['arduino'] == arduinos[x]['name']:
+                if modules[i]['temp']:
+                    if arduinos[x]['temp'] == CMD_ON or (modules[i]['state'] and modules[i]['user'] and time.time() - modules[i]['start'] > 18000):
+                        modules[i]['state'] == True
+                        _send_command(port,modules[i]['house'], modules[i]['unit'], CMD_ON)
+                    else:
+                        modules[i]['state'] == False
+                        _send_command(port, modules[i]['house'], modules[i]['unit'], CMD_OFF)
+                else:
+                    if arduinos[x]['pir'] == CMD_ON or (modules[i]['state'] and modules[i]['user'] and time.time() - modules[i]['start'] > 18000):
+                        modules[i]['state'] == True
+                        _send_command(port, modules[i]['house'], modules[i]['unit'], CMD_ON)
+                    else:
+                        modules[i]['state'] == False
+                        _send_command(port, modules[i]['house'], modules[i]['unit'], CMD_OFF)
+                if time.time() - modules[i]['start'] > 18000:
+                    modules[i]['user'] = False
+
+
+def _new_arduino(number):
+    _send_data_to_arduino_(2)
+    _send_data_to_arduino_(number)
+
 
 if __name__ == "__main__":
     _main_()
