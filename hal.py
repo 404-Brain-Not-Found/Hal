@@ -10,7 +10,6 @@ from piui import PiUi
 current_dir = os.path.dirname(os.path.abspath(__file__))
 port = 1
 addArduino = False
-modRecords = {}
 modules = {}
 arduinos = {}
 # arduino con
@@ -230,16 +229,22 @@ def _send_command(portname, house, unit, action):
 
 
 def _update_stored_data():
-    np.save('mod_records', modrecords)
+    np.save('modules', modules)
+    np.save('arduinos', arduinos)
 
 
 def _recover_data_():
-    modRecords = np.load('mod_records')
+    global modules
+    global arduinos
+    modules = np.load('modules')
+    arduinos = np.load('arduinos')
 
 # user interface
 
 
 class _UserInterface_(object):
+    global addArduino
+
     def __init__(self):
         self.title = None
         self.txt = None
@@ -297,6 +302,7 @@ class _UserInterface_(object):
                                      'house': HOUSE_LIST[self.houseTxt.get_text().upper()],
                                      'unit': UNIT_LIST[str(current_number_in_house)], 'temp': temp_con,
                                      'state': False})
+            _update_stored_data()
             self.page = self.ui.new_ui_page(title="You successfuly add a new Module")
             self.title = self.page.add_textbox("Set the X10 module to unit number:", "h1")
             self.title = self.page.add_textbox(str(current_number_in_house), "h1")
@@ -322,6 +328,7 @@ class _UserInterface_(object):
 
     def _new_arduino_(self):
         arduinos[len(arduinos)] = {'name': self.arduinoTxt.get_text(), 'temp': CMD_OFF, 'pir': CMD_OFF}
+        _update_stored_data()
         self.page = self.ui.new_ui_page(title="Successfully added an arduino")
         button = self.page.add_button('Return to Main page', self._main_menu_)
 
@@ -427,7 +434,7 @@ def _new_arduino(number):
 
 def _arduino_():
     if addArduino:
-        _new_arduino(len(arduinos)- 1)
+        _new_arduino(len(arduinos) - 1)
         global addArduino
         addArduino= False
     else:
@@ -435,10 +442,12 @@ def _arduino_():
 
 
 if __name__ == "__main__":
-    q = Queue()
-    p1 = Process(target=_main_)
-    p2 = Process(target= _arduino_)
-    p3 = Process(target=_set_modules_)
-    p1.start()
-    p2.start()
-    p3.start()
+    _recover_data_()
+    while __name__ == "__main__":
+        q = Queue()
+        p1 = Process(target=_main_)
+        p2 = Process(target=_arduino_)
+        p3 = Process(target=_set_modules_)
+        p1.start()
+        p2.start()
+        p3.start()
