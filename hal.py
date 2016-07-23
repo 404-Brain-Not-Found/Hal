@@ -3,11 +3,13 @@ import serial
 import time
 import sys
 import functools
+from multiprocessing import Process, Queue
 import os
 import random
 from piui import PiUi
 current_dir = os.path.dirname(os.path.abspath(__file__))
 port = 1
+addArduino = False
 modRecords = {}
 modules = {}
 arduinos = {}
@@ -328,6 +330,7 @@ class _UserInterface_(object):
         self.title = self.page.add_textbox("Enter name")
         self.arduinoTxt = self.page.add_input("text", "Name")
         button = self.page.add_button("Add Arduino", self._new_arduino_)
+        addArduino = True
         self.ui.done()
 
     def _check_help_(self):
@@ -422,5 +425,20 @@ def _new_arduino(number):
     _send_data_to_arduino_(number)
 
 
+def _arduino_():
+    if addArduino:
+        _new_arduino(len(arduinos)- 1)
+        global addArduino
+        addArduino= False
+    else:
+        _read_arduinos_()
+
+
 if __name__ == "__main__":
-    _main_()
+    q = Queue()
+    p1 = Process(target=_main_)
+    p2 = Process(target= _arduino_)
+    p3 = Process(target=_set_modules_)
+    p1.start()
+    p2.start()
+    p3.start()
