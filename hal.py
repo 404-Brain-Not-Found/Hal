@@ -13,6 +13,7 @@ port = 1
 addArduino = False
 modules = {}
 arduinos = {}
+groups = {}
 # arduino con
 arduinoCodes = {
     'off': 0,
@@ -189,6 +190,18 @@ class _UserInterface_(object):
         self.ui.done()
         _loop_()
 
+    def _new_group_(self):
+        groups.append({'name': self.classTxt.get_text(), 'number': len(groups)})
+        self.page = self.ui.new_ui_page(title="Succesfully added the Group")
+        button =self.page.add_button("Return the Main Menu", self._main_menu_)
+
+    def _add_group_(self):
+        _loop_()
+        self.page = self.ui.new_ui_page(title="Add Group", prev_text='Back', onprevclick=self._main_)
+        self.title = self.page.add_textbox("Enter Name of Group", 'h1')
+        self.classTxt = self.page.add_input('type',"Name of Group")
+        button = self.page.add_button("Add Group", self._new_group_)
+
     def _check_help_(self):
         self.page = self.ui.new_ui_page(title='Checking Module Help', prev_text='Back', onprevclick=self._help_)
         self.title = self.page.add_textbox("Point:", 'h1')
@@ -264,7 +277,7 @@ def _set_modules_():
                 if modules[i]['temp']:
                     if arduinos[x]['temp'] or modules[i]['user']:
                         on = 1
-                    state = [_letter_to_num[modules[i]['class']], _letter_to_num[modules[i]['house']],
+                    state = [groups[[modules[i]['class']]], _letter_to_num[modules[i]['house']],
                              modules[i]['unit'], on]
                     modules[i]['state'] = on
                 else:
