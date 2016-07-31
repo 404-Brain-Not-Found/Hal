@@ -48,6 +48,7 @@ class _UserInterface_(object):
         modules[mod]['state'] = not modules[mod]['state']
         modules[mod]['user'] = True
         modules[mod]['start'] = time.time()
+        _update_data()
 
     def _house_(self, house, group):
         self.page = self.ui.new_ui_page(title= house, prev_text="Back", onprevclick=self._houses_)
@@ -145,7 +146,8 @@ class _UserInterface_(object):
 
     def _new_group_(self):
         add[1] = True
-        groups.append({'name': self.classTxt.get_text(), 'number': len(groups)})
+        groups[len(groups)] = {'name': self.classTxt.get_text(), 'number': len(groups)}
+        _update_data()
         self.page = self.ui.new_ui_page(title="Succesfully added the Group")
         button =self.page.add_button("Return the Main Menu", self._main_menu_)
 
