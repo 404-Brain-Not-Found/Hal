@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="05e9c5a1-3f43-4c82-ba6c-16fe786bc8d7" name="Default" comment="add i2c communication and removed x10 firecracker">
+    <list default="true" id="05e9c5a1-3f43-4c82-ba6c-16fe786bc8d7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hal.py" afterPath="$PROJECT_DIR$/hal.py" />
     </list>
     <ignored path="Hal.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -284,7 +283,14 @@
       <option name="project" value="LOCAL" />
       <updated>1469655040003</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="wrote the code for the arduino to x10&#10;">
+      <created>1469744964111</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1469744964111</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -326,7 +332,8 @@
     <MESSAGE value="add multicore" />
     <MESSAGE value="Main finishing of the version 1" />
     <MESSAGE value="add i2c communication and removed x10 firecracker" />
-    <option name="LAST_COMMIT_MESSAGE" value="add i2c communication and removed x10 firecracker" />
+    <MESSAGE value="wrote the code for the arduino to x10&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="wrote the code for the arduino to x10&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
